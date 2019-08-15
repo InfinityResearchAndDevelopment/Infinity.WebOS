@@ -386,13 +386,55 @@ function frameSetIcon(magic,icon) {
   taskicon[0].innerHTML=icon;
 }
 
-function frameCreateLabel(magic,text,left,top,width,height,options) {
+function frameCreateLabel(magic,text,left,top,options) {
+  var frame = $('.frame[magic="'+magic+'"]')
+  var ctrl=document.createElement('div');
+  var ctrlMagic=magic+randomString(16);
+  ctrl.innerHTML='<span>'+text+'</span>';
+  ctrl.setAttribute('id',"InfinityUI-Control-Label-"+ctrlMagic);
+  ctrl.setAttribute('class',"InfinityUI-Control InfinityUI-Control-Label");
+  ctrlStyle={
+    "left":left.toString()+"em",
+    "top": top.toString()+"em",
+  };
+  $(ctrl).css(ctrlStyle);
+  frame.find('.content').append(ctrl);
 }
-function frameCreateInput(magic,text,left,top,width,height,options) {
+function frameCreateInput(magic,placeholder,left,top,width,ctrlCallback,options) {
+  var frame = $('.frame[magic="'+magic+'"]')
+  var ctrl=document.createElement('div');
+  var ctrlMagic=magic+randomString(16);
+  // ctrl.innerHTML='<div contenteditable="true" placeholder="'+text+'"></div>​';
+  ctrl.setAttribute('id',"InfinityUI-Control-Input-"+ctrlMagic);
+  ctrl.setAttribute('contenteditable',true);
+  ctrl.setAttribute('placeholder',placeholder);
+  ctrl.setAttribute('class',"InfinityUI-Control InfinityUI-Control-Input");
+  // ctrl.setAttribute('width',text.length);
+  ctrlStyle={
+    "left":left.toString()+"em",
+    "top": top.toString()+"em",
+  };
+  $(ctrl).css(ctrlStyle);
+  if (width!=-1){
+    $(ctrl).css({"width": width.toString()+"em"});
+  }
+  $(ctrl).css(ctrlStyle);
+  frame.find('.content').append(ctrl);
+  $(ctrl).on('paste',function(e) {
+      var $self = $(this);
+      setTimeout(function() {$self.html($self.text());},0);
+  }).on('keypress', function(e) {
+         return e.which != 13;
+  });
+  $.each(ctrlCallback, function (key, data) {
+    func=eval('('+data+')');
+    $(ctrl).on(key,_.debounce(func));
+  });
 }
 function frameCreateEdit(magic,text,left,top,width,height,options) {
+
 }
-function frameCreateButton(magic,text,left,top,width=-1,height=-1,bootstrap,options) {
+function frameCreateButton(magic,text,left,top,width=-1,height=-1,ctrlCallback,options) {
   var frame = $('.frame[magic="'+magic+'"]')
   var ctrl=document.createElement('div');
   var ctrlMagic=magic+randomString(16);
@@ -411,7 +453,10 @@ function frameCreateButton(magic,text,left,top,width=-1,height=-1,bootstrap,opti
     $(ctrl).css({"height": height.toString()+"em"});
   }
   frame.find('.content').append(ctrl);
-  $(ctrl).click(_.once(bootstrap))
+  $.each(ctrlCallback, function (key, data) {
+    func=eval('('+data+')');
+    $(ctrl).on(key,_.debounce(func));
+  });
 }
 function frameCreateCheckbox(magic,text,left,top,width,height,options) {
 }
