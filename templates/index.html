@@ -40,6 +40,7 @@
                 flex-direction: column;
                 display: block;
                 transition: opacity 0.25s ease-in-out;
+                pointer-events: none;
             }
             .loader-stage1-message {
                 display: flex;
@@ -287,13 +288,8 @@
           },500);
           window.setTimeout(function(){
             document.getElementById("loader-stage1").style.opacity=0;
+            bindEvents();
           },1000);
-            //console.log("hereh");
-            // procReq({call: "session.start"},function(data){
-            //     thisSessionID=data.SessionID;
-            //     bumpProg();
-            //     procReq({call: "session.auth", SessionID: thisSessionID},initStage4(data));
-            // });
         }
         // function procReq(post,cb){
         //     $.post("<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>",

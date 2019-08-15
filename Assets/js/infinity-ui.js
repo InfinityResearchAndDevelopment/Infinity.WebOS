@@ -530,10 +530,10 @@ jQuery(function($) {
 });
 
 
-window.addEventListener('load', function() {
-  bindEvents();
-  // createWindow(Math.random().toString(36).replace(/[^a-z0-9]+/g, '').substr(0, 16), '40px', '80px', '400px', '300px')
-  // createWindow(Math.random().toString(36).replace(/[^a-z0-9]+/g, '').substr(0, 16), '80px', '120px', '400px', '300px')
-  // createWindow(Math.random().toString(36).replace(/[^a-z0-9]+/g, '').substr(0, 16), '120px', '160px', '400px', '300px')
-  // createWindow(Math.random().toString(36).replace(/[^a-z0-9]+/g, '').substr(0, 16), '160px', '200px', '400px', '300px')
-});
+// window.addEventListener('load', function() {
+//   bindEvents();
+//   // createWindow(Math.random().toString(36).replace(/[^a-z0-9]+/g, '').substr(0, 16), '40px', '80px', '400px', '300px')
+//   // createWindow(Math.random().toString(36).replace(/[^a-z0-9]+/g, '').substr(0, 16), '80px', '120px', '400px', '300px')
+//   // createWindow(Math.random().toString(36).replace(/[^a-z0-9]+/g, '').substr(0, 16), '120px', '160px', '400px', '300px')
+//   // createWindow(Math.random().toString(36).replace(/[^a-z0-9]+/g, '').substr(0, 16), '160px', '200px', '400px', '300px')
+// });
