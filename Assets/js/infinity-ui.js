@@ -314,7 +314,7 @@ function snapDragOut(event, ui) {
   $('.workspace-snap-ghost-active').removeClass("workspace-snap-ghost-active");
 };
 
-function createWindow(title, left, top, width, height) {
+function createWindow(title, left, top, width, height,bootstrap) {
   var magic
   do {
     magic = Math.random().toString(36).replace(/[^a-z0-9]+/g, '').substr(0, 16);
@@ -348,9 +348,9 @@ function createWindow(title, left, top, width, height) {
     transition: 'opacity 125ms ease-in-out',
   });
   updateTasks(magic, 1);
+  bootstrap(magic,frame);
   bindEvents();
   elem.find('.frame').css('opacity', "1");
-  //ellipsizeTextBox("taskbar-task-text");
   setTimeout(function() {
     showWindow(magic)
   }, 125);
@@ -363,6 +363,60 @@ function createWindow(title, left, top, width, height) {
   console.log(frames)
   return magic
 };
+
+function frameSetIcon(magic,icon) {
+  var frame = $('.frame[magic="' + magic + '"]')
+  var taskicon = $('.taskbar-task-button[magic="' + magic + '"] .taskbar-task-icon')
+  taskicon[0].innerHTML=icon;
+}
+
+function frameCreateLabel(magic,text,left,top,width,height,options) {
+}
+function frameCreateInput(magic,text,left,top,width,height,options) {
+}
+function frameCreateEdit(magic,text,left,top,width,height,options) {
+}
+function frameCreateButton(magic,text,left,top,width,height,options) {
+}
+function frameCreateCheckbox(magic,text,left,top,width,height,options) {
+}
+function frameCreateRadioButton(magic,text,left,top,options) {
+}
+function frameCreateListbox(magic,text,left,top,options) {
+}
+function frameCreateCombobox(magic,entries,default,left,top,options) {
+}
+function frameCreateContextMenu(magic,entries,left,top,options) {
+}
+function frameCreateGroupbox(magic,text,left,top,width,height,options) {
+}
+function frameCreateImage(magic,source,left,top,width,height,options) {
+}
+function frameCreateIcon(magic,name,left,top,width,height,options) {
+}
+function frameCreateTrayMenu(magic,entries) {
+}
+function frameCreateAppMenu(magic,entries) {
+}
+function frameCreateSlider(magic,default,left,top,width,height,options) {
+}
+function frameCreateProgress(magic,default,left,top,width,height,options) {
+}
+function frameCreateDatePick(magic,date,left,top,width,height,options) {
+}
+function frameCreateCalender(magic,date,left,top,width,height,options) {
+}
+function frameCreateTreeView(magic,left,top,width,height,options) {
+}
+function frameCreateListView(magic,left,top,width,height,options) {
+}
+function frameCreateTab(magic,options) {
+}
+function frameCreateStatusBar(magic,options) {
+}
+function frameCreateToolBar(magic,entries,options) {
+}
+
 
 function hideWindow(magic) {
   frame = $('.frame[magic="' + magic + '"]')
@@ -513,6 +567,7 @@ function focusWindow(magic) {
       $('.frame[magic="'+frames[i]+'"]').attr('focus',false)
     }
   }
+
   var frame = $('.frame[magic="'+magic+'"]')
   var taskbtn = $('.taskbar-task-button[magic="'+magic+'"]')
   frame.attr('focus',true)

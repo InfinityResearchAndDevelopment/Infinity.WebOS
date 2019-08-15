@@ -288,6 +288,9 @@
           window.setTimeout(function(){
             document.getElementById("loader-stage1").style.opacity=0;
             bindEvents();
+            createWindow("UI Controls", '120px', '80px', '500px', '400px',function(magic,frame){
+              frameSetIcon(magic,'tune');
+            })
           },1000);
         }
     </script>
