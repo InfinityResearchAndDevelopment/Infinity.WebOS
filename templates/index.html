@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Infinity.WebOS</title>
+        <meta name="Description" content="InfinityResearchAndDevelopment, Bridging the Gap">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="icon" href="favicon.ico" type="image/x-icon"/>
+        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon"/>
+        <style>
+            @font-face {
+              font-family: 'Inconsolata';
+              font-style: normal;
+              font-weight: 400;
+              src: local('Inconsolata Regular'), local('Inconsolata-Regular'), url(Assets/font/Inconsolata-Regular.woff2) format('woff2');
+              unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+            }
+            /* latin */
+            @font-face {
+              font-family: 'Inconsolata';
+              font-style: normal;
+              font-weight: 400;
+              src: local('Inconsolata Regular'), local('Inconsolata-Regular'), url(Assets/font/Inconsolata-Regular.woff2) format('woff2');
+              unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+            }
+            body {
+                background-color: rgb(22, 22, 22);
+                font-family: 'Inconsolata', monospace;
+            }
+            .loader-stage1-container {
+                position: absolute;
+                left: 0px;
+                top: 0px;
+                display: flex !important;
+                align-items: center;
+                justify-content: center;
+                width: 100%;
+                height: 100%;
+                background-color: rgb(22, 22, 22);
+                z-index: 9999;
+                flex-direction: column;
+                display: block;
+                transition: opacity 0.25s ease-in-out;
+            }
+            .loader-stage1-message {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                justify-items: center;
+                align-items: center;
+            }
+            .loader-stage1-text {
+                position:relative;
+                color: rgba(255,255,255,1);
+                text-shadow: 0 0 4px rgba(255,255,255,1);
+            }
+            .loader-stage1-header {
+                font-size: x-large;
+                color: rgba(255,255,255,1) !important;
+                text-shadow: 0 0 4px rgba(255,255,255,1)  !important;
+            }
+            .loader-stage1-spinner-container {
+                width:50px;
+                max-height:50px;
+                overflow:hidden;
+                border-radius: 100px;
+                opacity:1;
+                transition: opacity 0.25s ease-in-out, max-height 0.25s ease-in-out;
+            }
+            .loader-stage1-spinner {
+                -webkit-animation: rotate 1s linear infinite;
+                animation: rotate 0.5s linear infinite;
+                z-index: 2;
+                width: 50px;
+                height: 50px;
+            }
+            .loader-stage1-spinner .path {
+                stroke: rgb(255, 255, 255);
+                stroke-linecap: round;
+                -webkit-animation: dash 1s ease-in-out infinite;
+                animation: dash 1s ease-in-out infinite;
+            }
+            .loader-stage1-spinner .glow {
+                stroke: rgb(0, 93, 255);
+                stroke-linecap: round;
+                -webkit-animation: dash 1s ease-in-out infinite;
+                animation: dash 1s ease-in-out infinite;
+                filter: url(#glow);
+            }
+
+            @-webkit-keyframes rotate {
+                100% {
+                    -webkit-transform: rotate(360deg);
+                    transform: rotate(360deg);
+                }
+            }
+            @keyframes rotate {
+                100% {
+                    -webkit-transform: rotate(360deg);
+                    transform: rotate(360deg);
+                }
+            }
+            @-webkit-keyframes dash {
+                0% {
+                    stroke-dasharray: 1, 150;
+                    stroke-dashoffset: 0;
+                }
+                50% {
+                    stroke-dasharray: 90, 150;
+                    stroke-dashoffset: -35;
+                }
+                100% {
+                    stroke-dasharray: 90, 150;
+                    stroke-dashoffset: -124;
+                }
+            }
+            @keyframes dash {
+                0% {
+                    stroke-dasharray: 1, 150;
+                    stroke-dashoffset: 0;
+                }
+                50% {
+                    stroke-dasharray: 90, 150;
+                    stroke-dashoffset: -35;
+                }
+                100% {
+                    stroke-dasharray: 90, 150;
+                    stroke-dashoffset: -124;
+                }
+            }
+            .loader-stage1-logo {
+                background-image: url(Assets/img/InfinityUI.png);
+                background-size:'cover';
+                width:256px;
+                transition: opacity 0.25s ease-in-out, max-height 0.25s ease-in-out;
+            }
+            .loader-stage2-progress-container {
+                margin-top: 16px;
+            }
+            .loader-progress-bar {
+                width: 241px;
+                height: 6px;
+                background-color: rgb(31, 41, 70);
+                border-radius: 100px;
+            }
+            .loader-progress-bar-fill {
+                width: 0%;
+                height: 100%;
+                border-radius: 100px;
+                max-width: 100%;
+                background-color: rgb(255, 255, 255);
+                box-shadow: 0px 0px 12px 3px rgb(114, 130, 249);
+                transition: width 0.25s ease-in-out;
+            }
+        </style>
+  </head>
+  <body>
+    <div id="loader-stage1" class="loader-stage1-container" style="opacity:0;">
+        <div id="loader-stage1-logo" class="loader-stage1-logo"  style="height:256px;max-height:0px;opacity:0;"></div>
+        <div class="loader-stage1-message">
+            <div id="loader-stage1-text-welcome" class="loader-stage1-text" style="height:20px;max-height:0px;opacity:0;">Welcome to, the</div>
+            <div class="loader-stage1-text loader-stage1-header">InfinityCommunicationsGateway</div>
+            <div id="loader-stage1-text-loading" class="loader-stage1-text" style="height:20px;max-height:20px;opacity:1;">Loading, please Wait...</div>
+        </div>
+        <div id="loader-stage2-progress" class="loader-stage2-progress-container" style="max-height:0px;opacity:0;">
+            <div id="loader-progress-bar" class="loader-progress-bar">
+                <div id="loader-progress-bar-fill" class="loader-progress-bar-fill"></div>
+            </div>
+        </div>
+        <div id="loader-stage1-spinner" class="loader-stage1-spinner-container">
+            <svg id="spinner-svg" class="loader-stage1-spinner" viewBox="0 0 50 50">
+              <defs>
+          			<filter id="glow">
+          				<fegaussianblur class="blur" result="coloredBlur" stddeviation="1"></fegaussianblur>
+          				<femerge>
+          					<femergenode in="coloredBlur"></femergenode>
+          					<femergenode in="SourceGraphic"></femergenode>
+          				</femerge>
+          			</filter>
+          		</defs>
+              <circle  id="spinner-svg-glow" class="glow" cx="25" cy="25" r="20" fill="none" stroke-width="3"></circle>
+              <circle id="spinner-svg-path" class="path" cx="25" cy="25" r="20" fill="none" stroke-width="3"></circle>
+            </svg>
+        </div>
+    </div>
+    <div id="workspace" class="workspace" style="opacity:0;">
+      <div draggable="false" class="taskbar">
+        <div class="taskbar-menu-button button"></div>
+        <div class="taskbar-tasks"></div>
+        <div class="taskbar-tray"></div>
+      </div>
+      <div class="taskbar-menu context-menu unselectable">
+        <!-- <div class="context-item">Show Desktop</div>
+        <div class="context-item context-separator"></div> -->
+        <div class="context-item context-submenu context-disabled">Apps<div class="context-submenu-arrow"><i class="material-icons" style="font-size:1.8em;">arrow_right</i></div></div>
+        <div class="context-item context-separator"></div>
+        <!-- <div class="context-item">Settings</div>
+        <div class="context-item context-separator"></div> -->
+        <!-- <div class="context-item">Restart Session</div>
+        <div class="context-item">End Session</div>
+        <div class="context-item">Logout</div>
+        <div class="context-item context-separator"></div> -->
+        <div class="context-item">About</div>
+      </div>
+      <div class="workspace-snap-top"></div>
+      <div class="workspace-snap-left"></div>
+      <div class="workspace-snap-right"></div>
+      <div class="workspace-snap-ghost"></div>
+    </div>
+    <script>
+        function loadScript(url, callback){
+            var head = document.getElementsByTagName('head')[0];
+            var script = document.createElement('script');
+            script.type = 'text/javascript';
+            script.src = url;
+            script.onreadystatechange = callback;
+            script.onload = callback;
+            head.appendChild(script);
+        }
+        function loadCSS(url, callback){
+            var head = document.getElementsByTagName('head')[0];
+            var script = document.createElement('link');
+            script.rel = 'stylesheet';
+            script.type = 'text/css';
+            script.href = url;
+            script.onreadystatechange = callback;
+            script.onload = callback;
+            head.appendChild(script);
+        }
+        function requestData(url,cb){
+            let xhr = new XMLHttpRequest(),
+            startTime;
+            xhr.open('get', url);
+            xhr.onload = e => {
+                if(cb){
+                    cb(xhr.response);
+                }
+            }
+            xhr.send();
+        }
+        var Apps=new Array();
+        var thisSessionID=null;
+        var loadprogress=document.getElementById("loader-progress-bar-fill");
+        window.onload=function() {
+            document.getElementById("loader-stage1").style.opacity=1;
+            var done=0;
+            loadScript('Assets/js/jquery-3.4.1.min.js',function(){
+                loadScript('Assets/js/jquery-ui-1.12.1.min.js',function(){
+                    initStage2();
+                });
+            });
+        };
+
+        function initStage2(){
+            var done=0;
+            document.getElementById("loader-stage1-spinner").style.opacity=0;
+            document.getElementById("loader-stage1-spinner").style.maxHeight="0px";
+            document.getElementById("spinner-svg").style.webkitAnimationPlayState="paused";
+            document.getElementById("spinner-svg-glow").style.webkitAnimationPlayState="paused";
+            document.getElementById("spinner-svg-path").style.webkitAnimationPlayState="paused";
+            document.getElementById("loader-stage1-logo").style.opacity=1;
+            document.getElementById("loader-stage1-logo").style.maxHeight="256px";
+            document.getElementById("loader-stage1-text-loading").style.opacity=0;
+            document.getElementById("loader-stage1-text-loading").style.maxHeight="0px";
+            document.getElementById("loader-stage1-text-welcome").style.opacity=1;
+            document.getElementById("loader-stage1-text-welcome").style.maxHeight="20px";
+            document.getElementById("loader-stage2-progress").style.opacity=1;
+            document.getElementById("loader-stage2-progress").style.maxHeight="6px";
+            loadprogress.style.width="1%";
+            loadScript('Assets/js/infinity-ui.js',function(){
+                done++;
+                bumpProg();
+                if (done==2){initStage3()};
+            });
+            loadCSS('Assets/css/infinity-ui.css',function(){
+                done++;
+                bumpProg();
+                if (done==2){initStage3()};
+            });
+        }
+        function bumpProg(){
+            loadprogress.style.width=String(Number(loadprogress.style.width.substr(0,loadprogress.style.width.length-1))+2)+"%";
+        }
+        function initStage3(){
+          window.setTimeout(function(){
+            document.getElementById("workspace").style.opacity=1;
+            loadprogress.style.width=String(100)+"%";
+          },500);
+          window.setTimeout(function(){
+            document.getElementById("loader-stage1").style.opacity=0;
+          },1000);
+            //console.log("hereh");
+            // procReq({call: "session.start"},function(data){
+            //     thisSessionID=data.SessionID;
+            //     bumpProg();
+            //     procReq({call: "session.auth", SessionID: thisSessionID},initStage4(data));
+            // });
+        }
+        // function procReq(post,cb){
+        //     $.post("<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>",
+        //         window.btoa(JSON.stringify(post)),
+        //         function(data) {
+        //             if (cb){cb(JSON.parse(data))};
+        //         }
+        //     );
+        // }
+        function initStage4(data){
+            var appProc=0;
+            bumpProg();
+            //console.log(data);
+            procReq({call: "getApps", SessionID: thisSessionID},function(ret){
+                //console.log(ret);
+                $.each(ret, function(index, obj){
+                    requestData("apps/"+obj,function(e){
+                        bumpProg();
+                        Apps.push(JSON.parse(e));
+                        appProc++;
+                        if (appProc==ret.length){
+                            Apps.forEach(function(obj){
+                                bumpProg();
+                                if (obj.Realm==window.location.host){
+                                    initApp(obj);
+                                }
+                            });
+                        }
+                    });
+                });
+            });
+        }
+        function initApp(App){
+            bumpProg();
+            console.log(App);
+            if (App.Dependencies.length>0){
+                App.Dependencies.forEach(function(dep){
+                    console.log(dep);
+                });
+            }
+
+        }
+    </script>
+  </body>
+</html>

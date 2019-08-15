@@ -1,0 +1,15 @@
+{
+    "Alias": "Logon",
+    "Build": "20190814053932",
+    "Magic": "oK759lsv3EMl0ZDIrWI3SdPy5pFIkqSn",
+    "Description": "Provides Login UI",
+    "Depends": [
+        "Controls",
+        "DialogBox"
+    ],
+    "Style": null,
+    "Body": null,
+    "Script": null,
+    "Assets": null,
+    "Init": null
+}

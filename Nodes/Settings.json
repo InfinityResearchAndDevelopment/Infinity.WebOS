@@ -1,0 +1,15 @@
+{
+    "Alias": "Settings",
+    "Build": "20190814053932",
+    "Magic": "HpaiiXOiQ8GJKddtFbrN7UynglKYiSC2",
+    "Description": "Provides Configuration UI",
+    "Depends": [
+        "Controls",
+        "FileManager"
+    ],
+    "Style": null,
+    "Body": null,
+    "Script": null,
+    "Assets": null,
+    "Init": null
+}

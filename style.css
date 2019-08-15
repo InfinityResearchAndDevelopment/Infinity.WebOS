@@ -1,0 +1,859 @@
+body {
+  font-family: 'Inconsolata', monospace;
+  text-shadow: 0 0 6px rgba(255,255,255,1);
+  background-image: url(https://InfinityCommunicationsGateway.Net/priv/dev/NewPlat/assets/bg.jpg);
+  background-color:rgba(0,0,0,1);
+  color:rgba(255,255,255,1);
+}
+
+/* Workspace */
+.workspace {
+  overflow:hidden;
+  position:absolute;
+  left:0px;
+  top:0px;
+  width:100%;
+  height:100%;
+}
+
+/* Workspace Snapping */
+.workspace-snap-top{
+  position:absolute;
+  top:3.2em;
+  left:0px;
+  right:0px;
+  height:0.625em;
+/*   background-color: rgba(255,0,255,0.4); */
+}
+.workspace-snap-left{
+  left:0px;
+  top:3.8em;
+  bottom:0px;
+  width:0.625em;
+  position:absolute;
+/*   background-color:rgba(255,255,0,0.4); */
+}
+.workspace-snap-right{
+  //z-index:9999;
+  right:0px;
+  width:0.625em;
+  bottom:0px;
+  top:3.8em;
+  position:absolute;
+/*   background-color:rgba(0,255,255,0.4); */
+}
+.workspace-snap-ghost{
+  transition: all .25s ease-in-out;
+  position:absolute;
+  left:0px;
+  top:3.125em;
+  bottom:0px;
+  width:50%;
+  opacity:0;
+  background-color:rgba(255,255,255,0.4);
+  z-index:9999;
+  pointer-events:none;
+}
+.workspace-snap-ghost-active{
+  transition: all .25s ease-in-out;
+  position:absolute;
+  left:0px;
+  top:0px;
+  bottom:0px;
+  width:50%;
+  opacity:0;
+  background-color:rgba(255,255,255,0.4);
+  z-index:9999;
+  pointer-events:none;
+}
+
+/* Context Menus */
+
+/* .frame{
+ border-radius:0.625em;
+ min-width: 10.000em;
+ min-height: 3em;
+ width:25.000em;
+ height:25.000em;
+} */
+
+.taskbar-menu {
+  left: 0.1em;
+  top: 3.3em;
+  position: absolute;
+  width: auto;
+  height: auto;
+  /* padding: 1em 1em 1em 1em; */
+}
+
+.context-menu::before {
+  /* border-radius:0.625em; */
+  box-shadow: inset 0 0 0.625em 0.063em rgba(255, 255, 255, 0.2), 0 0 0px 0.063em rgba(255,255,255,0.3);
+  content: "";
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: 1;
+  pointer-events:none;
+}
+.context-menu {
+  transition: all 125ms ease-in-out;
+  animation-duration: 125ms;
+  animation-timing-function: ease-in-out;
+  will-change: transform, opacity;
+}
+.context-menu::after {
+  /* border-radius:0.625em; */
+  backdrop-filter: blur(0.625em);
+  -webkit-backdrop-filter: blur(0.625em);
+  --webkit-backdrop-filter: blur(0.625em);
+  content: "";
+  top:0px;
+  bottom:0px;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: -1;
+  pointer-events:none;
+}
+
+.context-submenu {
+}
+
+.context-submenu-arrow {
+  position: absolute;
+  right: 0em;
+  margin: -0.3em;
+  display: inline;
+}
+
+.context-item {
+  transition: all .12s ease-in-out;
+  box-shadow: inset 0 0 0.6em 0.063em rgba(255, 255, 255, 0.2), 0 0 0px 0.063em rgba(255,255,255,0.3);
+  padding: 0.5em 0.5em 0.5em 0.5em;
+}
+
+.context-item:hover{
+    box-shadow: inset 0 0 0.625em 0.063em rgba(255, 255, 255, 0.5), 0 0 0px 0.063em rgba(255,255,255,0.4);
+}
+
+.context-item:active {
+  box-shadow: inset 0 0 0.625em 0.063em rgba(255, 255, 255, 0.5), 0 0 0px 0.063em rgba(255,255,255,0.6);
+}
+
+.context-item:not(:last-child):not(:first-child){
+  margin: 0.15em 0em 0.2em 0em;
+}
+
+.context-item:last-child {
+  margin: 0.3em 0em 0em 0em;
+}
+
+.context-item:first-child {
+  margin: 0em 0em 0.3em 0em;
+}
+
+.context-separator {
+  box-shadow: unset;
+  padding:unset;
+  margin: unset;
+}
+
+.context-separator + .context-item {
+  margin: 0.7em 0em 0.0em 0em !important;
+}
+
+.context-disabled {
+  color: rgba(255, 255, 255, 0.4);
+  box-shadow: inset 0 0 0.625em 0.063em rgba(255, 255, 255, 0.1), 0 0 0px 0.063em rgba(255, 255, 255, 0.2);
+  pointer-events: none;
+}
+
+ /* Frames */
+ .frame::after {
+     border-radius:0.625em;
+     backdrop-filter: blur(0.625em);
+     -webkit-backdrop-filter: blur(0.625em);
+     --webkit-backdrop-filter: blur(0.625em);
+     content: "";
+     width: 100%;
+     height: 100%;
+     /* create a new stacking context */
+     position: absolute;
+     z-index: -1;  /* to be below the parent element */
+     pointer-events:none;
+
+ }
+
+.frame::before {
+    border-radius:0.625em;
+    box-shadow: inset 0 0 0.625em 0.063em rgba(255, 255, 255, 0.3), 0 0 0px 0.063em rgba(255,255,255,0.4);
+    content: "";
+    width: 100%;
+    height: 100%;
+    /* create a new stacking context */
+    position: absolute;
+    z-index: 1;  /* to be below the parent element */
+    pointer-events:none;
+}
+
+.frame{
+	transition: all 125ms ease-in-out;
+	animation-duration: 125ms;
+    animation-timing-function: ease-in-out;
+	/* animation-fill-mode: both; */
+	will-change: transform, opacity;
+	border-radius:0.625em;
+	position:absolute;
+	min-width: 10.000em;
+	min-height: 3em;
+	width:25.000em;
+	height:25.000em;
+	left:32px;
+	top:32px;
+}
+
+.frame[focus="false"]::before {
+    box-shadow: inset 0 0 0.625em 0.063em rgba(255, 255, 255, 0.1), 0 0 0px 0.063em rgba(255, 255, 255, 0.2);
+}
+
+.content {
+  position:absolute;
+  border-radius:0px 0px 0.625em 0.625em;
+  //background-color:rgba(0,0,0,1);
+  width:100%;
+  top:1.875em;
+  bottom:0px;
+}
+
+.titlebar{
+  justify-content: center;
+  display: flex;
+  flex-flow: row;
+  position: absolute;
+  border-radius: 0.625em 0.625em 0px 0px;
+  width:100%;
+  height:1.875em;
+  background-color:rgba(255,255,255,0.4);
+  align-items: center;
+  z-index:100;
+  overflow: hidden;
+}
+
+.frame[focus="false"] .titlebar{
+  background-color:rgba(132, 132, 132, 0.3);
+}
+
+.titlebar-no-buttons{
+}
+.titlebar-buttons{
+  /* order: 3 */;
+  /* flex-grow:2 */;
+  max-width:5.000em;
+  min-width:5.000em;
+  display:inline-flex;
+  justify-content:space-evenly;
+  position:absolute;
+  right:0;
+}
+
+.titlebar-button{
+  transition: all .25s ease-in-out;
+  border-radius:6.250em;
+  width:1.125em;
+  height:1.125em;
+  color:rgba(255,255,255,1);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  user-select:none;
+}
+
+.titlebar-button-disabled{
+  border-radius:6.250em;
+  width:1.125em;
+  height:1.125em;
+  color:rgba(255,255,255,0.3);
+  background-color:rgba(255,255,255,0.2)!important;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  user-select:none;
+  pointer-events:none;
+}
+
+.frame-minimize-button{
+  background-color: rgba(255,255,0,0.3);
+}
+.frame-minimize-button:hover{
+  background-color: rgba(255,255,0,0.6);
+}
+.frame-minimize-button:active{
+  background-color: rgba(255,255,0,0.8);
+}
+.frame-maximize-button{
+    display:inherit;
+    //display:none;
+    background-color: rgba(0,255,0,0.3);
+}
+.frame-maximize-button:hover{
+    background-color: rgba(0,255,0,0.6);
+}
+.frame-maximize-button:active{
+    background-color: rgba(0,255,0,0.8);
+}
+.frame-restore-button{
+    display:none;
+    //display:inherit;
+    background-color: rgba(0,255,0,0.3);
+}
+.frame-restore-button:hover{
+    background-color: rgba(0,255,0,0.6);
+}
+.frame-restore-button:active{
+    background-color: rgba(0,255,0,0.8);
+}
+.frame-close-button{
+  background-color: rgba(255,0,0,0.3);
+}
+.frame-close-button:hover{
+  background-color: rgba(255,0,0,0.6);
+}
+.frame-close-button:active{
+  background-color: rgba(255,0,0,0.8);
+}
+
+.titlebar-title-left{
+  order: 2;
+/*   flex-grow:1; */
+/*   flex-grow:2; */
+  height:1.500em;
+  vertical-align: center;
+  margin: auto;
+  padding-left: 0.500em;
+  padding-top:0.250em;
+  overflow:hidden;
+  white-space:nowrap;
+  text-overflow: ellipsis;
+  position:absolute;
+  left:0;
+  right:5em;
+}
+
+.frame[focus="false"] .titlebar-title-left{
+	color: rgba(255, 255, 255, 0.4);
+}
+
+.titlebar-icon{
+  flex: none;
+  order: 1;
+  margin-left:0.250em;
+  height:1.500em;
+  width:1.500em;
+  //background-color:rgba(255,0,0,0.4);
+}
+
+
+/* Frame Resizing */
+.ui-resizable-handle{
+  position: absolute;
+  font-size: 0.006em;
+  display: block;
+  -ms-touch-action: none;
+  touch-action: none;
+}
+.ui-resizable-e{
+    cursor: ew-resize;
+    width: 0.250em;
+    right: -0.125em;
+    top: 0.375em;
+    bottom: 0.375em;
+    //background-color:rgba(40,255,127,0.3);
+}
+.ui-resizable-w{
+    cursor: ew-resize;
+    width: 0.250em;
+    left: -0.125em;
+    top: 0.375em;
+    bottom: 0.375em;
+    //background-color:rgba(40,255,127,0.3);
+}
+.ui-resizable-n{
+    cursor: ns-resize;
+    height: 0.250em;
+    top: -0.125em;
+    left: 0.375em;
+    right: 0.375em;
+    //background-color:rgba(40,255,127,0.3);
+}
+.ui-resizable-s{
+    cursor: ns-resize;
+    height: 0.250em;
+    bottom: -0.125em;
+    left: 0.375em;
+    right: 0.375em;
+    //background-color:rgba(40,255,127,0.3);
+}
+.ui-resizable-se{
+    cursor: nwse-resize;
+    border-radius: 0 0 0.625em 0;
+    width: 0.500em;
+    height: 0.500em;
+    right: -0.125em;
+    bottom: -0.125em;
+    //background-color:rgba(255,255,255,0.3);
+}
+.ui-resizable-ne{
+    cursor: nesw-resize;
+    border-radius: 0 0.625em 0 0;
+    width: 0.500em;
+    height: 0.500em;
+    right: -0.125em;
+    top: -0.125em;
+    //background-color:rgba(255,255,255,0.3);
+}
+.ui-resizable-nw{
+    cursor: nwse-resize;
+    border-radius: 0.625em 0 0 0;
+    width: 0.500em;
+    height: 0.500em;
+    left: -0.125em;
+    top: -0.125em;
+    //background-color:rgba(255,255,255,0.3);
+}
+.ui-resizable-sw{
+    cursor: nesw-resize;
+    border-radius: 0 0 0 0.625em;
+    width: 0.500em;
+    height: 0.500em;
+    left: -0.125em;
+    bottom: -0.125em;
+    //background-color:rgba(255,255,255,0.3);
+}
+
+/* Controls */
+.button::before {
+  border-radius:0.625em;
+    box-shadow: inset 0 0 0.625em 0.063em rgba(255, 255, 255, 0.3), 0 0 0px 0.063em rgba(255,255,255,0.4);
+    content: "";
+    width: 100%;
+    height: 100%;
+    /* create a new stacking context */
+    position: absolute;
+    z-index: 1;  /* to be below the parent element */
+    pointer-events:none;
+}
+
+.button{
+  border-radius:0.625em;
+  width-min:1.875em;
+  height-min:1.875em;
+  z-index:9000;
+}
+
+/* Taskbar */
+.taskbar::after {
+    backdrop-filter: blur(0.625em);
+    -webkit-backdrop-filter: blur(0.625em);
+    --webkit-backdrop-filter: blur(0.625em);
+    content: "";
+    left:0px;
+    top:0px;
+    right:-0.250em;
+    height: 100%;
+    /* create a new stacking context */
+    position: absolute;
+    z-index: -1;  /* to be below the parent element */
+    pointer-events:none;
+}
+
+.taskbar:before {
+    //box-shadow: 0 0 0px 0.063em rgba(255,255,255,0.2);
+    content: "";
+    height: 100%;
+    /* create a new stacking context */
+    position:absolute;
+    left:0px;
+    top:0px;
+    right:0px;
+    z-index: 1;  /* to be below the parent element */
+    pointer-events:none;
+}
+
+.taskbar{
+  position:absolute;
+  height:3.125em;
+  right:0px;
+  top:0px;
+  left:0px;
+  z-index:9000;
+  display:inline-flex;
+}
+
+.taskbar-menu-button::before {
+    transition: all .25s ease-in-out;
+    border-radius:0px;
+    box-shadow: inset 0 0 0.625em 0.063em rgba(255, 255, 255, 0.3), 0 0 0px 0.063em rgba(255,255,255,0.4);
+    content: "";
+    position: absolute;
+    top:0px;
+    right:0px;
+    left:0px;
+    height: 100%;
+    /* create a new stacking context */
+    z-index: 1;  /* to be below the parent element */
+    pointer-events:none;
+}
+
+.taskbar-menu-button{
+  position:relative;
+  transition: all .25s ease-in-out;
+  background-size: cover;
+  background-image: url(logo.png);
+  background-position: fixed;
+ //background-color:rgba(0,255,0,0.3);
+   width: 3.1em;
+  /* max-width:3em; */
+  /* min-width:3em; */
+  height:100%;
+  margin-right:0.250em;
+  /* flex-grow: 1; */
+}
+
+
+.taskbar-menu-button:hover::before {
+    transition: all .12s ease-in-out;
+    box-shadow: inset 0 0 0.625em 0.063em rgba(255, 255, 255, 0.5), 0 0 0px 0.063em rgba(255,255,255,0.4);
+    content: "";
+    position: absolute;
+    top:0px;
+    right:0px;
+    left:0px;
+    height: 100%;
+    /* create a new stacking context */
+    position: absolute;
+    z-index: 1;  /* to be below the parent element */
+    pointer-events:none;
+}
+
+.taskbar-menu-button:hover{
+  transition: all .12s ease-in-out;
+  background-size: cover;
+  //background-image: url(logo.png);
+
+ //background-color:rgba(0,255,0,0.3);
+  width:3.1em;
+  height:100%;
+  position:relative;
+}
+
+.taskbar-menu-button:active::before {
+  transition: all .12s ease-in-out;
+  box-shadow: inset 0 0 0.625em 0.063em rgba(255, 255, 255, 0.5), 0 0 0px 0.063em rgba(255,255,255,0.6);
+    content: "";
+    position: absolute;
+    top:0px;
+    right:0px;
+    left:0px;
+    height: 100%;
+    /* create a new stacking context */
+    z-index: 1;  /* to be below the parent element */
+    pointer-events:none;
+}
+.taskbar-menu-button:active{
+  transition: all .12s ease-in-out;
+  position:relative;
+  width:3.1em;
+  height:100%;
+}
+.taskbar-menu-button::after {
+    background-color:rgba(122,188,244,0.15);
+    content: "";
+    left:0px;
+    top:0px;
+    right:0px;
+    height: 100%;
+    /* create a new stacking context */
+    position: absolute;
+    z-index: -1;  /* to be below the parent element */
+    pointer-events:none;
+}
+
+.taskbar-tasks:before {
+    box-shadow: inset 0 0 0.625em 0.063em rgba(255, 255, 255, 0.2), 0 0 0px 0.063em rgba(255,255,255,0.3);
+    content: "";
+    left:0.063em;
+    right:0.063em;
+    top:0.063em;
+    bottom: 0.063em;
+    /* create a new stacking context */
+    position: absolute;
+    z-index: 1;  /* to be below the parent element */
+    pointer-events:none;
+    overflow:visible;
+}
+
+.taskbar-tasks{
+  flex-grow: 2;
+  position: relative;
+  height:100%;
+  display:inline-flex;
+  overflow: hidden;
+  margin: -0.063em -0.063em 0px -0.063em;
+  padding:0.063em;
+}
+
+.taskbar-task-button:before {
+    position: absolute;
+    left: 0px;
+    right: 0px;
+    transition: all .25s ease-in-out;
+    border-radius:0px;
+box-shadow: inset 0 0 0.625em 0.063em rgba(255, 255, 255, 0.15), 0 0 0px 0.063em rgba(255,255,255,0.3);    content: "";
+    height:100%;
+    z-index: 1;  /* to be below the parent element */
+    pointer-events:none;
+}
+
+.taskbar-task-button{
+  user-select: none;
+  transition: all .25s ease-in-out;
+  border-radius:0px;
+  background-size: cover;
+  position:relative;
+  max-width:10.000em;
+  min-width: 7.813em;
+  height:100%;
+  margin-right:0.250em;
+  flex-grow: 1;
+  flex-shrink: 1;
+  flex-basis: 10.625em;
+  display:inline-flex;
+
+  vertical-align: middle;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.taskbar-task-icon{
+  position:absolute;
+  display: inline-block;
+  background-repeat: no-repeat;
+  background-size: contain;
+  left:0.250em;
+  width: 1em;
+  height: 1em;
+  order:1;
+  color:white;
+  font-size: 2.250em!important;;
+}
+
+.taskbar-task-text{
+    position: absolute;
+    color: rgba(255,255,255,1);
+    order: 1;
+    left: 3.5em;
+    right: 0.5em;
+    font-size: 0.9em;
+    max-height: 2.725em;
+}
+
+.taskbar-task-button:hover::before {
+  position: absolute;
+  left: 0px;
+  right: 0px;
+  transition: all .12s ease-in-out;
+  border-radius:0px;
+  box-shadow: inset 0 0 0.625em 0.063em rgba(255, 255, 255, 0.3), 0 0 0px 0.063em rgba(255,255,255,0.4);
+  content: "";
+  margin:auto;
+  height:100%;
+  /* create a new stacking context */
+  z-index: 1;  /* to be below the parent element */
+  pointer-events:none;
+}
+
+.taskbar-task-button:hover{
+  transition: all .12s ease-in-out;
+  border-radius:0px;
+  background-size: cover;
+  width:100%;
+  max-width:10.000em;
+  min-width: 7.813em;
+  height:100%;
+  margin-right:0.250em;
+}
+
+.taskbar-task-button:active::before {
+  position: absolute;
+  left: 0px;
+  right: 0px;
+  transition: all .12s ease-in-out;
+  border-radius:0px;
+  box-shadow: inset 0 0 0.625em 0.063em rgba(255, 255, 255, 0.5), 0 0 0px 0.063em rgba(255,255,255,0.6);
+  content: "";
+  margin:auto;
+  height:100%;
+  z-index: 1;  /* to be below the parent element */
+  pointer-events:none;
+}
+.taskbar-task-button:active{
+  transition: all .12s ease-in-out;
+  border-radius:0px;
+  width:100%;
+  max-width:10.000em;
+  min-width: 7.813em;
+  height:100%;
+  margin-right:0.250em;
+}
+
+.taskbar-task-button::after {
+    background-color:rgba(122,188,244,0.4);
+    content: "";
+    left:0px;
+    top:0px;
+    right:0px;
+    height: 100%;
+    /* create a new stacking context */
+    position: absolute;
+    z-index: -1;  /* to be below the parent element */
+    pointer-events:none;
+}
+
+.taskbar-task-button-focus::after {
+    background-color:rgba(0, 122, 226, 0.6);
+    content: "";
+    left:0px;
+    top:0px;
+    right:0px;
+    height: 100%;
+    /* create a new stacking context */
+    position: absolute;
+    z-index: -1;  /* to be below the parent element */
+    pointer-events:none;
+}
+
+.taskbar-tasks::after {
+    background-color:rgba(122,188,244,0.15);
+    content: "";
+    left:0px;
+    top:0px;
+    right:0px;
+    height: 100%;
+    /* create a new stacking context */
+    position: absolute;
+    z-index: -1;  /* to be below the parent element */
+    pointer-events:none;
+}
+
+.taskbar-tray:before {
+    box-shadow: inset 0 0 0.625em 0.063em rgba(255, 255, 255, 0.2), 0 0 0px 0.063em rgba(255,255,255,0.3);
+    content: "";
+    top:0px;
+    left:0px;
+    right:0px;
+    height: 100%;
+    /* create a new stacking context */
+    position: absolute;
+    z-index: 1;  /* to be below the parent element */
+    pointer-events:none;
+}
+
+.taskbar-tray{
+  flex-grow: 1;
+  position:relative;
+  left:0.250em;
+  min-width:3.750em;
+  max-width: 7.500em;
+  width:3.750em;
+  height:100%;
+}
+
+.taskbar-tray::after {
+    background-color:rgba(122,188,244,0.15);
+    content: "";
+    left:0px;
+    top:0px;
+    right:0px;
+    height: 100%;
+    /* create a new stacking context */
+    position: absolute;
+    z-index: -1;  /* to be below the parent element */
+    pointer-events:none;
+}
+
+.unselectable {
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+@keyframes showContainer {
+  from {
+    visibility: hidden;
+    opacity: 0;
+  } to {
+    visibility: visible;
+    opacity: 1;
+  }
+}
+
+@keyframes hideContainer {
+  from {
+    visibility: visible;
+    opacity: 1;
+  } to {
+    visibility: hidden;
+    opacity: 0;
+  }
+}
+
+@keyframes frameShow {
+  from {
+    /* opacity: 0; */
+    transform: scale(0.25);
+	pointer-events:none;
+  } to {
+    /* opacity: 1; */
+	transform: none;
+	pointer-events:all;
+  }
+}
+
+@keyframes frameHide {
+  from {
+    opacity: 1;
+    transform: none;
+	pointer-events:all;
+  } to {
+    opacity: 0;
+	pointer-events:none;
+    transform: scale(0.25);
+  }
+}
+
+/* .frame[visible="true"] { */
+    /* pointer-events: auto; */
+    /* animation-name: showContainer; */
+/* } */
+/* .frame[visible="false"] { */
+    /* animation-name: hideContainer; */
+/* } */
+
+/* .inf-dialog-container[visible="false"]:not([data-type="alert"]) { */
+    /* animation-delay: 75ms; */
+/* } */
+
+.frame[visible="true"] {
+    animation: frameShow 200ms ease-in-out
+	animation-fill-mode: both;
+}
+
+/* .inf-dialog-container[visible="true"]:not([data-type="alert"]){ */
+    /* animation-delay: 100ms; */
+/* } */
+
+.frame[visible="false"] {
+    animation: frameHide 200ms ease-in-out;
+	animation-fill-mode: both;
+}

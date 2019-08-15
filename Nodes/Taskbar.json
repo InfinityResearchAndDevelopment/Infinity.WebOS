@@ -1,0 +1,15 @@
+{
+    "Alias": "Taskbar",
+    "Build": "20190814053932",
+    "Magic": "bDH9kMLIOQQWWFZB5tupfn49eZZNltji",
+    "Description": "Provides Task Menu, Taskbar, App Tray, and Clock",
+    "Depends": [
+        "Controls",
+        "WindowManager"
+    ],
+    "Style": null,
+    "Body": null,
+    "Script": null,
+    "Assets": null,
+    "Init": null
+}

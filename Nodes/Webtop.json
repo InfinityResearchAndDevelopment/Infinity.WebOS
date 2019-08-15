@@ -1,0 +1,15 @@
+{
+    "Alias": "Webtop",
+    "Build": "20190814053932",
+    "Magic": "KOgIVVqn3Z9q3e0DBNuZJEZgnH72w7Ao",
+    "Description": "Wraps Taskbar, and Window Manger. Provides background.",
+    "Depends": [
+        "Taskbar",
+        "WindowManager"
+    ],
+    "Style": null,
+    "Body": null,
+    "Script": null,
+    "Assets": null,
+    "Init": null
+}

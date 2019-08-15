@@ -1,0 +1,14 @@
+{
+    "Alias": "WindowManager",
+    "Build": "20190814053932",
+    "Magic": "8vDWW0nyhNVp3qi2QjXLp5l5PbtXJ0Ws",
+    "Description": "Provides Window Managment Functionality",
+    "Depends": [
+        "Controls"
+    ],
+    "Style": null,
+    "Body": null,
+    "Script": null,
+    "Assets": null,
+    "Init": null
+}

@@ -1,0 +1,15 @@
+{
+    "Alias": "DialogBox",
+    "Build": "20190814053932",
+    "Magic": "sU7bmLm37bkJO4AVHiR4wsHTUFbfb1aV",
+    "Description": "Provides Notification Box, Input Box, and User Prompt",
+    "Depends": [
+        "Controls",
+        "WindowManager"
+    ],
+    "Style": null,
+    "Body": null,
+    "Script": null,
+    "Assets": null,
+    "Init": null
+}
