@@ -27,12 +27,29 @@ var currentMousePos = {
 var frames = []
 var timer
 
+function randomString(length) {
+    for(var c = ''; c.length < length;) c += Math.random().toString(36).substr(2, 1);
+    return c;
+}
 //Initialize Events...
 function bindEvents() {
+  //unbind events
+  $(".taskbar-menu-button").unbind();
+  $(".taskbar .taskbar-tasks .taskbar-task-button").unbind();
+  $(".frame-minimize-button").unbind();
+  $(".titlebar .titlebar-title-left").unbind();
+  $(".frame .content, .frame .titlebar-title-left").unbind();
+  $(".frame").unbind();
+  $(".frame-maximize-button").unbind();
+  $(".frame-restore-button").unbind();
+  $(".frame-close-button").unbind();
+  $('.workspace-snap-top').unbind();
+  $('.workspace-snap-left').unbind();
+  $('.workspace-snap-right').unbind();
   // Minimize:Restore on Task Button Click
   $(".taskbar-menu-button").click(_.once(function() {
-    thismgk = Math.random().toString(36).replace(/[^a-z0-9]+/g, '').substr(0, 16)
-    createWindow(thismgk, '120px', '80px', '400px', '300px')
+    thismgk = randomString(16);
+    createWindow(thismgk, '120px', '80px', '400px', '300px',function(){})
     // if (timer) clearTimeout(timer);
   }));
   $(".taskbar .taskbar-tasks .taskbar-task-button").click(function() {
@@ -317,7 +334,7 @@ function snapDragOut(event, ui) {
 function createWindow(title, left, top, width, height,bootstrap) {
   var magic
   do {
-    magic = Math.random().toString(36).replace(/[^a-z0-9]+/g, '').substr(0, 16);
+    magic = randomString(16);
   } while (frames.includes(magic));
   var divhtml = `\
     <div magic="` + magic + `" style="width:` + width + `;height:` + height + `;left:` + left + `;top:` + top + `;transform:scale(0);opacity:0" class="frame" min="true" max="0" visible="false"> \
@@ -348,7 +365,7 @@ function createWindow(title, left, top, width, height,bootstrap) {
     transition: 'opacity 125ms ease-in-out',
   });
   updateTasks(magic, 1);
-  bootstrap(magic,frame);
+  bootstrap(magic);
   bindEvents();
   elem.find('.frame').css('opacity', "1");
   setTimeout(function() {
@@ -365,7 +382,6 @@ function createWindow(title, left, top, width, height,bootstrap) {
 };
 
 function frameSetIcon(magic,icon) {
-  var frame = $('.frame[magic="' + magic + '"]')
   var taskicon = $('.taskbar-task-button[magic="' + magic + '"] .taskbar-task-icon')
   taskicon[0].innerHTML=icon;
 }
@@ -377,6 +393,8 @@ function frameCreateInput(magic,text,left,top,width,height,options) {
 function frameCreateEdit(magic,text,left,top,width,height,options) {
 }
 function frameCreateButton(magic,text,left,top,width,height,options) {
+  var frame = $('.frame[magic="' + magic + '"]')
+
 }
 function frameCreateCheckbox(magic,text,left,top,width,height,options) {
 }
@@ -384,7 +402,7 @@ function frameCreateRadioButton(magic,text,left,top,options) {
 }
 function frameCreateListbox(magic,text,left,top,options) {
 }
-function frameCreateCombobox(magic,entries,default,left,top,options) {
+function frameCreateCombobox(magic,entries,initial,left,top,options) {
 }
 function frameCreateContextMenu(magic,entries,left,top,options) {
 }
@@ -398,9 +416,9 @@ function frameCreateTrayMenu(magic,entries) {
 }
 function frameCreateAppMenu(magic,entries) {
 }
-function frameCreateSlider(magic,default,left,top,width,height,options) {
+function frameCreateSlider(magic,initial,left,top,width,height,options) {
 }
-function frameCreateProgress(magic,default,left,top,width,height,options) {
+function frameCreateProgress(magic,initial,left,top,width,height,options) {
 }
 function frameCreateDatePick(magic,date,left,top,width,height,options) {
 }
