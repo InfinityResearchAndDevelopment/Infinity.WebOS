@@ -30,13 +30,11 @@ var timer
 //Initialize Events...
 function bindEvents() {
   // Minimize:Restore on Task Button Click
-  $(".taskbar-menu-button").click(function() {
+  $(".taskbar-menu-button").click(_.once(function() {
     thismgk = Math.random().toString(36).replace(/[^a-z0-9]+/g, '').substr(0, 16)
     createWindow(thismgk, '120px', '80px', '400px', '300px')
-    if (timer) clearTimeout(timer);
-    timer = setTimeout(process, 5000);
-    focusWindow(thismgk)
-  });
+    // if (timer) clearTimeout(timer);
+  }));
   $(".taskbar .taskbar-tasks .taskbar-task-button").click(function() {
     var magic=$(this).attr('magic')
     var frame = $('.frame[magic="' + magic + '"]')

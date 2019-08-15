@@ -243,9 +243,11 @@
             document.getElementById("loader-stage1").style.opacity=1;
             var done=0;
             loadScript('Assets/js/jquery-3.4.1.min.js',function(){
-                loadScript('Assets/js/jquery-ui-1.12.1.min.js',function(){
+              loadScript('Assets/js/jquery-ui-1.12.1.min.js',function(){
+                loadScript('Assets/js/lodash-4.17.15.min.js',function(){
                     initStage2();
                 });
+              });
             });
         };
         function initStage2(){
