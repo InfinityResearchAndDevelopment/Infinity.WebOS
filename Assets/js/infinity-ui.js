@@ -39,19 +39,21 @@ function bindEvents() {
   $(".frame-minimize-button").unbind();
   $(".titlebar .titlebar-title-left").unbind();
   $(".frame .content, .frame .titlebar-title-left").unbind();
-  $(".frame").unbind();
+  // $(".frame").unbind();
   $(".frame-maximize-button").unbind();
   $(".frame-restore-button").unbind();
   $(".frame-close-button").unbind();
   $('.workspace-snap-top').unbind();
   $('.workspace-snap-left').unbind();
   $('.workspace-snap-right').unbind();
-  // Minimize:Restore on Task Button Click
+
+  // Test menu button click.
   $(".taskbar-menu-button").click(_.once(function() {
     thismgk = randomString(16);
     createWindow(thismgk, '120px', '80px', '400px', '300px',function(){})
     // if (timer) clearTimeout(timer);
   }));
+  // Minimize:Restore on Task Button Click
   $(".taskbar .taskbar-tasks .taskbar-task-button").click(function() {
     var magic=$(this).attr('magic')
     var frame = $('.frame[magic="' + magic + '"]')
@@ -81,8 +83,8 @@ function bindEvents() {
   // Maximize/Restore on TitleBar DoubleClick
   $(".frame-minimize-button").click(function() {
     //console.log($(this).parent().parent().parent().attr('max'));
-    var magic=$(this).parents('.frame').attr('magic')
-    var frame = $('.frame[magic="' + magic + '"]')
+    var frame = $(this).parents('.frame')
+    var magic = frame.attr('magic')
     hideWindow(magic);
     frame.css('opacity', "0");
     frame.css('transform', "scale(0)");
@@ -99,8 +101,8 @@ function bindEvents() {
     }
   });
   $(".titlebar .titlebar-title-left").dblclick(function() {
-    var magic=$(this).parents('.frame').attr('magic')
-    var frame = $('.frame[magic="' + magic + '"]')
+    var frame = $(this).parents('.frame')
+    var magic=frame.attr('magic')
     if (frame.attr('max') == 1) {
       restoreWindow(magic);
     } else {
@@ -110,7 +112,6 @@ function bindEvents() {
   });
   $(".frame .content, .frame .titlebar-title-left").mousedown(function() {
     var magic=$(this).parents('.frame').attr('magic')
-
     focusWindow(magic);
   });
   // Draggable Frames
@@ -126,7 +127,7 @@ function bindEvents() {
     revertDuration: 200,
     drag: function(event, ui) {
       if ($(ui.helper).attr("snap") == 1) {
-        restoreWindow($(ui.helper), 1);
+        restoreWindow($(ui.helper).attr("magic"), 1);
         $(ui.helper).attr("snap", 0);
       } else {
         $(ui.helper).css({
@@ -149,10 +150,9 @@ function bindEvents() {
   $(".frame-maximize-button").click(function() {
     // console.log($(this).parents('.frame'))
     //console.log($(this).parent().parent().parent().attr('max'));
-    var magic=$(this).parents('.frame').attr('magic')
-    var frame = $('.frame[magic="' + magic + '"]')
+    var frame = $(this).parents('.frame')
+    var magic = frame.attr('magic')
     if (frame.attr('max') == 0) {
-
       focusWindow(magic)
       maximizeWindow(magic);
       frame.attr("max", 1);
@@ -161,8 +161,8 @@ function bindEvents() {
     }
   });
   $(".frame-restore-button").click(function() {
-    var magic=$(this).parents('.frame').attr('magic')
-    var frame = $('.frame[magic="' + magic + '"]')
+    var frame = $(this).parents('.frame')
+    var magic = frame.attr('magic')
     if (frame.attr('max') == 1) {
       restoreWindow(magic);
       if (frame.attr("snap") == 1) {
@@ -171,8 +171,8 @@ function bindEvents() {
     }
   });
   $(".frame-close-button").click(function() {
-    var magic=$(this).parents('.frame').attr('magic')
-    var frame = $('.frame[magic="' + magic + '"]')
+    var frame = $(this).parents('.frame')
+    var magic = frame.attr('magic')
     hideWindow(magic);
     setTimeout(function() {
       frame.parent().remove();
@@ -463,6 +463,7 @@ function showWindow(magic) {
 
 function restoreWindow(magic, unsnap = 0) {
   var frame = $('.frame[magic="' + magic + '"]')
+  console.log(magic);
   var restore = JSON.parse(frame.attr('restore'));
   if (restore.top < parseInt($('.taskbar').css('top')) + parseInt($('.taskbar').css('height'))) {
     frame.css({
