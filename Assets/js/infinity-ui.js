@@ -93,6 +93,7 @@ function bindEvents() {
   });
   $(".frame .content, .frame .titlebar-title-left").mousedown(function() {
     var magic=$(this).parents('.frame').attr('magic')
+
     focusWindow(magic);
   });
   // Draggable Frames
@@ -134,6 +135,7 @@ function bindEvents() {
     var magic=$(this).parents('.frame').attr('magic')
     var frame = $('.frame[magic="' + magic + '"]')
     if (frame.attr('max') == 0) {
+
       focusWindow(magic)
       maximizeWindow(magic);
       frame.attr("max", 1);
@@ -492,6 +494,7 @@ function map(x, in_min, in_max, out_min, out_max) {
 }
 
 function focusWindow(magic) {
+  if (magic==undefined && !frames.length) {return false};
   var new_order=[]
   for (var i=0; i < frames.length; ++i){
     if (frames[i]!=magic) {
