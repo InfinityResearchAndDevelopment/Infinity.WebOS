@@ -331,7 +331,7 @@ function snapDragOut(event, ui) {
   $('.workspace-snap-ghost-active').removeClass("workspace-snap-ghost-active");
 };
 
-function createWindow(title, left, top, width, height,bootstrap) {
+function createWindow(title, left, top, width, height, bootstrap) {
   var magic
   do {
     magic = randomString(16);
@@ -392,9 +392,26 @@ function frameCreateInput(magic,text,left,top,width,height,options) {
 }
 function frameCreateEdit(magic,text,left,top,width,height,options) {
 }
-function frameCreateButton(magic,text,left,top,width,height,options) {
-  var frame = $('.frame[magic="' + magic + '"]')
-
+function frameCreateButton(magic,text,left,top,width=-1,height=-1,bootstrap,options) {
+  var frame = $('.frame[magic="'+magic+'"]')
+  var ctrl=document.createElement('div');
+  var ctrlMagic=magic+randomString(16);
+  ctrl.innerHTML='<span>'+text+'</span>';
+  ctrl.setAttribute('id',"InfinityUI-Control-Button-"+ctrlMagic);
+  ctrl.setAttribute('class',"InfinityUI-Control InfinityUI-Control-Button");
+  ctrlStyle={
+    "left":left.toString()+"em",
+    "top": top.toString()+"em",
+  };
+  $(ctrl).css(ctrlStyle);
+  if (width!=-1){
+    $(ctrl).css({"width": width.toString()+"em"});
+  }
+  if (height!=-1){
+    $(ctrl).css({"height": height.toString()+"em"});
+  }
+  frame.find('.content').append(ctrl);
+  $(ctrl).click(_.once(bootstrap))
 }
 function frameCreateCheckbox(magic,text,left,top,width,height,options) {
 }
@@ -434,7 +451,6 @@ function frameCreateStatusBar(magic,options) {
 }
 function frameCreateToolBar(magic,entries,options) {
 }
-
 
 function hideWindow(magic) {
   frame = $('.frame[magic="' + magic + '"]')

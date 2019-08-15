@@ -464,23 +464,105 @@ body {
 }
 
 /* Controls */
-.button::before {
-  border-radius:0.625em;
-    box-shadow: inset 0 0 0.625em 0.063em rgba(255, 255, 255, 0.3), 0 0 0px 0.063em rgba(255,255,255,0.4);
-    content: "";
-    width: 100%;
-    height: 100%;
-    /* create a new stacking context */
-    position: absolute;
-    z-index: 1;  /* to be below the parent element */
-    pointer-events:none;
+.InfinityUI-Control:before{
+  position: absolute;
+  left: 0px;
+  right: 0px;
+  transition: all .25s ease-in-out;
+  border-radius:0px;
+  box-shadow: inset 0 0 0.625em 0.063em rgba(255, 255, 255, 0.15), 0 0 0px 0.063em rgba(255,255,255,0.3);    content: "";
+  height:100%;
+  z-index: 1;
+  pointer-events:none;
 }
-
-.button{
-  border-radius:0.625em;
-  width-min:1.875em;
-  height-min:1.875em;
-  z-index:9000;
+.InfinityUI-Control{
+  user-select: none;
+  transition: all .25s ease-in-out;
+  /* border-radius:0px; */
+  /* background-size: cover; */
+  position:absolute;
+  /* max-width:10.000em; */
+  /* min-width: 7.813em; */
+  /* height:100%; */
+  /* margin-right:0.250em; */
+  /* flex-grow: 1; */
+  /* flex-shrink: 1; */
+  /* flex-basis: 10.625em; */
+  /* display:inline-flex; */
+  /* vertical-align: middle; */
+  /* justify-content: flex-start; */
+  /* align-items: center; */
+}
+.InfinityUI-Control:hover::before{
+  position: absolute;
+  left: 0px;
+  right: 0px;
+  transition: all .12s ease-in-out;
+  /* border-radius:0px; */
+  box-shadow: inset 0 0 0.625em 0.063em rgba(255, 255, 255, 0.3), 0 0 0px 0.063em rgba(255,255,255,0.4);
+  content: "";
+  margin:auto;
+  height:100%;
+  /* create a new stacking context */
+  z-index: 1;  /* to be below the parent element */
+  pointer-events:none;
+}
+.InfinityUI-Control:hover{
+  transition: all .12s ease-in-out;
+  /* border-radius:0px; */
+  /* background-size: cover; */
+  /* width:100%; */
+  /* max-width:10.000em; */
+  /* min-width: 7.813em; */
+  /* height:100%; */
+  /* margin-right:0.250em; */
+}
+.InfinityUI-Control:active::before{
+  position: absolute;
+  left: 0px;
+  right: 0px;
+  transition: all .12s ease-in-out;
+  /* border-radius:0px; */
+  box-shadow: inset 0 0 0.625em 0.063em rgba(255, 255, 255, 0.5), 0 0 0px 0.063em rgba(255,255,255,0.6);
+  content: "";
+  margin:auto;
+  height:100%;
+  z-index: 1;  /* to be below the parent element */
+  pointer-events:none;
+}
+.InfinityUI-Control:active{
+  transition: all .12s ease-in-out;
+  /* border-radius:0px; */
+  /* width:100%; */
+  /* max-width:10.000em; */
+  /* min-width: 7.813em; */
+  /* height:100%; */
+  /* margin-right:0.250em; */
+}
+.InfinityUI-Control:after{
+  background-color:rgba(122,188,244,0.4);
+  content: "";
+  left:0px;
+  top:0px;
+  right:0px;
+  height: 100%;
+  /* create a new stacking context */
+  position: absolute;
+  z-index: -1;  /* to be below the parent element */
+  pointer-events:none;
+}
+.InfinityUI-Control-Button:before{
+  border-radius:0.3em;
+}
+.InfinityUI-Control-Button{
+  position: absolute;
+  display: inline-flex;
+  align-items: center;
+  padding: 0.4em;
+  min-width: 1em;
+  min-height: 1em;
+  border-radius:0.3em;
+  padding: 0.3em;
 }
 
 /* Taskbar */
@@ -521,6 +603,8 @@ body {
   z-index:9000;
   display:inline-flex;
 }
+
+
 
 .taskbar-menu-button::before {
     transition: all .25s ease-in-out;
